@@ -48,6 +48,7 @@ module.exports = function (grunt) {
         },
         all: [
             "Gruntfile.js",
+            "karma.conf.js",
             "specs/**/*.js",
             "src/**/*.js"
         ]
@@ -129,6 +130,48 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask("build", ["lint", "requirejs", "uglify:build", "copy:dist"]);
+
+
+     /**
+     * Karma-Runner execution configuration to execute Unit-Tests from
+     * within Grunt
+     */
+    grunt.config("karma", {
+        "all": {
+            configFile: 'karma.conf.js',
+            autoWatch: true
+        },
+        "all-single": {
+            configFile: 'karma.conf.js',
+            autoWatch: false
+        },
+        "dev":{
+            configFile: 'karma.conf.js',
+            browsers: ['PhantomJS'],
+            autoWatch: true
+        },
+        "dev-single": {
+            configFile: 'karma.conf.js',
+            browsers: ['PhantomJS'],
+            singleRun: true
+        }
+    });
+
+    // Execute single test run with PhantomJS
+    grunt.registerTask("test", ["karma:dev-single"]);
+
+    // Execute a test run on a running server
+    grunt.registerTask("test:run", ["karma:dev:run"]);
+
+    // Watch changes and run tests on Phantom automatically
+    grunt.registerTask("watch:test", ["karma:dev"]);
+
+    // Run a karma test-server for everybody else to connect to
+    grunt.registerTask("test:server", ["lint", "karma:all-single"]);
+
+    // Run a karma test server for everybody to connect to, while watching
+    // and auto-executing tests once files change
+    grunt.registerTask("watch:test:server", ["lint", "karma:all"]);
 
 
     /**
