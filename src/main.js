@@ -1,3 +1,3 @@
 define(function() {
-    alert("I am ready and loaded!");
+    window.alert("I am ready and loaded!");
 });

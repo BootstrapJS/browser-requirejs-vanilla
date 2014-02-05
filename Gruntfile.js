@@ -23,6 +23,21 @@ module.exports = function (grunt) {
         }
     });
 
+    /**
+     * Basic configuration for all uglify tasks
+     */
+    grunt.config("uglify", {
+        options: {
+            report: "gzip",
+            /** preserve special comments, which include licensens and stuff */
+            preserveComments: "some",
+            /** Write out source maps for each uglified target */
+            sourceMap: function(filepath) {
+                return filepath + ".map";
+            }
+        }
+    });
+
 
     /**
      * Jshint configuration for linting the project files
@@ -43,6 +58,8 @@ module.exports = function (grunt) {
         tasks: ["lint"]
     });
 
+    grunt.registerTask("lint", ["jshint"]);
+
 
     /**
      * Statically build all dependencies into one file for production
@@ -52,16 +69,16 @@ module.exports = function (grunt) {
             options: {
                 basePath: "src/",
                 mainConfigFile: "src/require.config.js",
-                dir: "build/",
+                dir: "build/requirejs/",
                 optimize: "none",
                 generateSourceMaps: true,
                 wrap: {
                     start: "(function() {",
                     end: "}());"
                 },
-                modules: {
+                modules: [{
                     name: "main",
-                    include: ["../node_modules/almond/almond"],
+                    include: ["../../node_modules/almond/almond"],
                     override: {
                         // We use the wrapping technique here instead of `insertRequire`
                         // as we need one initial sync `require` to make sure the library
@@ -72,16 +89,46 @@ module.exports = function (grunt) {
                             end: "require('main');\n" + "}());"
                         }
                     }
-                }
+                }]
             }
         }
+    });
+
+    grunt.config("uglify.build", {
+        files: {
+            "build/uglify/main.min.js": "build/requirejs/main.js"
+        }
+    });
+
+    grunt.config("copy.dist", {
+        files: [
+            {
+                expand: true,
+                cwd: "assets",
+                src: ["*"],
+                dest: "dist/"
+            },
+            {
+                expand: true,
+                flatten: true,
+                src: [
+                    "build/requirejs/main.js",
+                    "build/uglify/main.min.js",
+                    "build/uglify/main.min.map"
+                ],
+                dest: "dist/js/"
+            }
+        ]
     });
 
     grunt.config("watch.build", {
         files: [
             "src/**/*.js"
-        ]
+        ],
+        tasks: ["build"]
     });
+
+    grunt.registerTask("build", ["lint", "requirejs", "uglify:build", "copy:dist"]);
 
 
     /**
@@ -107,11 +154,7 @@ module.exports = function (grunt) {
     });
 
     /**
-     * Available Grunt-Tasks to the outside world
+     * Default grunt task ;)
      */
-    grunt.registerTask("lint", ["jshint"]);
-
-    grunt.registerTask("build", ["lint", "requirejs"]);
-
     grunt.registerTask("default", ["build"]);
 };
