@@ -19,6 +19,21 @@ module.exports = function (grunt) {
         ]
     });
 
+
+    /**
+     * Allow to watch and re-execute tasks once files change automatically
+     */
+    grunt.config("watch", {
+        options: {
+            atBegin: true
+        },
+        lint: {
+            files: grunt.config.get("jshint.all"),
+            tasks: ["lint"]
+        }
+    });
+
+
     /**
      * Available Grunt-Tasks to the outside world
      */
