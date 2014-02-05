@@ -1,2 +1,4 @@
-/node_modules
-/.idea
+/www/
+/node_modules/
+/.idea/
+
