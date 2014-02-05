@@ -4,5 +4,8 @@
   "version": "0.0.0",
   "description": "A basic seed repository used as a starting point for my js browser projects",
   "author": "Jakob Westhoff",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.2"
+  }
 }
