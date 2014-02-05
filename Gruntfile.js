@@ -29,7 +29,7 @@ module.exports = function (grunt) {
     grunt.config("uglify", {
         options: {
             report: "gzip",
-            /** preserve special comments, which include licensens and stuff */
+            /** preserve special comments, which include licenses and stuff */
             preserveComments: "some",
             /** Write out source maps for each uglified target */
             sourceMap: function(filepath) {
@@ -151,6 +151,15 @@ module.exports = function (grunt) {
                 dest: "www/"
             }
         ]
+    });
+
+
+    /**
+     * Clean all the build and temporary directories
+     */
+    grunt.config("clean", {
+        "build": ["!build/.gitignore", "build/**/*"],
+        "dist": ["!dist/.gitignore", "dist/**/*"]
     });
 
     /**
