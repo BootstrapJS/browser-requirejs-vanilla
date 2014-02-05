@@ -11,6 +11,8 @@
     "load-grunt-tasks": "~0.3.0",
     "grunt-contrib-watch": "~0.5.3",
     "almond": "~0.2.9",
-    "grunt-contrib-requirejs": "~0.4.1"
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-symlink": "~0.3.0",
+    "requirejs": "~2.1.10"
   }
 }
