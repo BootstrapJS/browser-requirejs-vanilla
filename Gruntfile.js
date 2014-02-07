@@ -189,8 +189,16 @@ module.exports = function (grunt) {
     grunt.config("symlink.www", {
         files: [
             {
-                src: "node_modules/requirejs/require.js",
-                dest: "www/vendor/requirejs/require.js"
+                src: "bower_components",
+                dest: "www/bower_components"
+            },
+            {
+                src: "node_modules",
+                dest: "www/node_modules"
+            },
+            {
+                src: "vendor",
+                dest: "www/vendor"
             },
             {
                 src: "src",
