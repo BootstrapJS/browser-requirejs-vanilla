@@ -210,8 +210,9 @@ module.exports = function (grunt) {
      * Clean all the build and temporary directories
      */
     grunt.config("clean", {
-        "build": ["!build/.gitignore", "build/**/*"],
-        "dist": ["!dist/.gitignore", "dist/**/*"]
+        "build": ["build/**/*"],
+        "dist": ["dist/**/*"],
+        "www": ["www/**/*"]
     });
 
     /**
