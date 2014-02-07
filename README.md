@@ -53,3 +53,8 @@ The following basic rules apply during development:
       `window.__html__["fixtures/YOUR_FIXTURE_NAME.html"]`
 
 Run `grunt tasks` to show a list of all available *grunt* tasks
+
+## Branches
+
+Different branches of the repository exist, which contain certain specialized
+versions of the seed for different frameworks, libraries and/or use cases.
