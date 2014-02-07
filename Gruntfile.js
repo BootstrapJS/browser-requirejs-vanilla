@@ -6,6 +6,15 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     /**
+     * Allow description and definition of avaialable tasks
+     */
+    grunt.config("availabletasks.tasks.options", {
+        /* No special config yet */
+    });
+    grunt.registerTask("tasks", ["availabletasks"]);
+
+
+    /**
      * Basic configuration for all watch tasks
      */
     grunt.config("watch", {

@@ -28,6 +28,7 @@
     "karma": "~0.10.9",
     "grunt-karma": "~0.6.2",
     "karma-junit-reporter": "~0.2.1",
-    "karma-spec-reporter": "0.0.8"
+    "karma-spec-reporter": "0.0.8",
+    "grunt-available-tasks": "~0.4.1"
   }
 }
