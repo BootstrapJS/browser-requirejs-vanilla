@@ -5,7 +5,7 @@ require.config({
     "paths": {
 
     },
-    "shims": {
+    "shim": {
 
     }
 });
