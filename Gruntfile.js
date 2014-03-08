@@ -188,18 +188,22 @@ module.exports = function (grunt) {
      */
     grunt.config("symlink.www", {
         files: [
+            /* // Scripts managed by bower
             {
                 src: "bower_components",
                 dest: "www/bower_components"
             },
+            */
             {
                 src: "node_modules",
                 dest: "www/node_modules"
             },
+            /* // Vendor scripts
             {
                 src: "vendor",
                 dest: "www/vendor"
             },
+            */
             {
                 src: "src",
                 dest: "www/js"
