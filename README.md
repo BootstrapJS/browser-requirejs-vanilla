@@ -58,3 +58,7 @@ Run `grunt tasks` to show a list of all available *grunt* tasks
 
 Different branches of the repository exist, which contain certain specialized
 versions of the seed for different frameworks, libraries and/or use cases.
+
+## Further Read
+
+I wrote a more detailed blog post about this repository, which can be found on my [personal blog](http://www.westhoffswelt.de/blog/2014/2/21/how-i-seed-a-new-javascript-project).
