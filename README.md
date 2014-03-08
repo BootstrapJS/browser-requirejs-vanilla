@@ -22,7 +22,7 @@ required:
 
 1. Copy a recent checkout to your new projects directory
 2. Remove the `.git` folder
-3. Replace the `name` and `description` inside the `package.json` with
+3. Replace the `name`, `description` and `author` inside the `package.json` with
    information about your new project
 4. Run `npm install`
 5. Run `grunt symlink:www`
