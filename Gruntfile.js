@@ -187,23 +187,29 @@ module.exports = function (grunt) {
      * Symlink files to www directory
      */
     grunt.config("symlink.www", {
+        /*
+         * Mostly use dynamic file lists in order to automatically skip those,
+         * which may not exist like vendor or node_modules or bower_components
+         */
         files: [
-            /* // Scripts managed by bower
             {
-                src: "bower_components",
-                dest: "www/bower_components"
+                expand: true,
+                cwd: ".",
+                src: ["bower_components"],
+                dest: "www/"
             },
-            */
             {
-                src: "node_modules",
-                dest: "www/node_modules"
+                expand: true,
+                cwd: ".",
+                src: ["node_modules"],
+                dest: "www/"
             },
-            /* // Vendor scripts
             {
-                src: "vendor",
-                dest: "www/vendor"
+                expand: true,
+                cwd: ".",
+                src: ["vendor"],
+                dest: "www/"
             },
-            */
             {
                 src: "src",
                 dest: "www/js"
