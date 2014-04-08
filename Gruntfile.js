@@ -14,6 +14,10 @@ module.exports = function (grunt) {
     grunt.registerTask("tasks", ["availabletasks"]);
 
 
+    var paths = {
+        www: 'www/',
+        src: 'src/**/*.js'
+    }
     /**
      * Basic configuration for all watch tasks
      */
@@ -59,7 +63,7 @@ module.exports = function (grunt) {
             "Gruntfile.js",
             "karma.conf.js",
             "specs/**/*.js",
-            "src/**/*.js"
+            paths.src
         ]
     });
 
@@ -132,9 +136,7 @@ module.exports = function (grunt) {
     });
 
     grunt.config("watch.build", {
-        files: [
-            "src/**/*.js"
-        ],
+        files: [ paths.src ],
         tasks: ["build"]
     });
 
