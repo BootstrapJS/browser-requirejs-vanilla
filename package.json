@@ -8,15 +8,16 @@
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.8.0",
-    "load-grunt-tasks": "~0.3.0",
     "grunt-contrib-watch": "~0.5.3",
-    "almond": "~0.2.9",
     "grunt-contrib-requirejs": "~0.4.1",
     "grunt-contrib-symlink": "~0.3.0",
-    "requirejs": "~2.1.10",
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-uglify": "~0.3.2",
     "grunt-contrib-clean": "~0.5.0",
+    "grunt-karma": "~0.6.2",
+    "grunt-available-tasks": "~0.4.1"
+    "load-grunt-tasks": "~0.3.0",
+    "karma": "~0.10.9",
     "karma-script-launcher": "~0.1.0",
     "karma-chrome-launcher": "~0.1.2",
     "karma-firefox-launcher": "~0.1.3",
@@ -25,10 +26,10 @@
     "karma-jasmine": "~0.1.5",
     "karma-coffee-preprocessor": "~0.1.2",
     "karma-phantomjs-launcher": "~0.1.2",
-    "karma": "~0.10.9",
-    "grunt-karma": "~0.6.2",
     "karma-junit-reporter": "~0.2.1",
     "karma-spec-reporter": "0.0.8",
-    "grunt-available-tasks": "~0.4.1"
+    "almond": "~0.2.9",
+    "requirejs": "~2.1.10",
+    
   }
 }
