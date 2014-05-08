@@ -85,17 +85,5 @@ module.exports = function (config) {
         // CLI --report-slower-than 500
         reportSlowerThan: 500,
 
-        // Load all necessary karma plugins
-        // Those are installed using npm (package.json)
-        plugins: [
-            'karma-requirejs',
-            'karma-jasmine',
-            'karma-chrome-launcher',
-            'karma-firefox-launcher',
-            'karma-phantomjs-launcher',
-            'karma-junit-reporter',
-            'karma-html2js-preprocessor',
-            'karma-spec-reporter'
-        ]
     });
 };
