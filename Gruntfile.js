@@ -248,6 +248,20 @@ module.exports = function (grunt) {
 
 
     /**
+     * DevServer configuration
+     */
+    grunt.config("devserver", {
+        all: {
+            options: {
+                port: parameters.devServer.port,
+                base: __dirname + "/" + parameters.devServer.documentRoot
+            }
+        }
+    });
+
+    grunt.registerTask("server", ["symlink", "devserver:all"]);
+
+    /**
      * Clean all the build and temporary directories
      */
     grunt.config("clean", {
