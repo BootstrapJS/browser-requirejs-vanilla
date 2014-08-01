@@ -5,13 +5,25 @@
         <link href="css/style.css" rel="stylesheet" type="text/css" media="all">
     </head>
     <body>
+        <script type="text/javascript">
+            // Synchronous request to load and decode Parameters.json
+            // We need this one to be blocking to have the parameters ready before starting the load
+            // cycle
+            var request = new XMLHttpRequest();
+            request.open('GET', '/Parameters.json', false);
+            request.send(null);
+
+            if (request.status === 200) {
+                window.__parameters = JSON.parse(request.responseText);
+            }
+        </script>
         <script type="text/javascript" src="node_modules/requirejs/require.js"></script>
-        <script type="text/javascript" src="js/require.config.js"></script>
+        <script type="text/javascript" src="Library/require.config.js"></script>
         <script type="text/javascript">
             require.config({
-                baseUrl: "js/"
+                baseUrl: __parameters.paths.source + "/"
             });
-            require(["main"]);
+            require([__parameters.entryPoint]);
         </script>
     </body>
 </html>

@@ -1,6 +1,5 @@
-/* globals module, __dirname */
-var fs = require("fs");
-
+/* jshint node:true */
+var support = require("./Build Support/Basic");
 module.exports = function (grunt) {
     /**
      * Automatically load all Grunttasks, which follow the pattern `grunt-*`
@@ -8,60 +7,19 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     /**
-     * Configure the projects paths
+     * Load main build parameters
      */
-    var paths = {
-        source: "Library",
-        specs: "Specifications",
-        build: "Temporary",
-        distribution: "Package",
-        assets: "Assets",
-        www: "Public",
-        vendor: "Vendor",
-        bower: "bower_components",
-        node: "node_modules"
-    };
+    var parameters = support.loadJSONFile("Parameters.json", {});
 
-    // Create convenience append functions for each path ;)
-    (function() {
-        var key, path;
-        /*jshint -W083, -W089*/
-        for (key in paths) {
-            if (paths.hasOwnProperty(key)) {
-                path = paths[key];
-                paths[key] = (function(path) {
-                    return function(/* segment... */) {
-                        var args = Array.prototype.slice.apply(arguments);
-                        if (args.length === 0) {
-                            return path;
-                        }
-
-                        var suffix = "";
-                        args.forEach(function(segment) {
-                            if (segment.substr(0, 1) === "/") {
-                                segment = segment.substring(1);
-                            }
-
-                            suffix = suffix + "/" + segment;
-                        });
-
-                        return path + "/" + suffix;
-                    };
-                }(path));
-            }
-        }
-        /*jshint +W083, +W089*/
-    }());
+    /**
+     * Create convenience append functions for each path ;)
+     */
+    var paths = support.createPathAccessors(parameters.paths);
 
     /**
      * Allow access to package.json if present
      */
-    var pkg = {};
-    if (fs.existsSync(__dirname + "/package.json")) {
-        pkg = JSON.parse(
-            fs.readFileSync(__dirname + "/package.json", {encoding: "utf8"})
-        );
-    }
+    var pkg = support.loadJSONFile("package.json", {});
 
     /**
      * Allow description and definition of avaialable tasks
@@ -116,7 +74,8 @@ module.exports = function (grunt) {
         all: [
             "Gruntfile.js",
             "karma.conf.js",
-            paths.specs("**/*.spec.js"),
+            "Build Support/**/*.js",
+            paths.specs("**/*" + parameters.specificationSuffix),
             paths.source("**/*.js")
         ]
     });
@@ -136,7 +95,7 @@ module.exports = function (grunt) {
         all: {
             options: {
                 basePath: paths.source(),
-                mainConfigFile: paths.source("require.config.js"),
+                mainConfigFile: paths.source(parameters.requireJsConfigName),
                 dir: paths.build("requirejs"),
                 optimize: "none",
                 generateSourceMaps: true,
@@ -145,7 +104,7 @@ module.exports = function (grunt) {
                     end: "}());"
                 },
                 modules: [{
-                    name: "main",
+                    name: parameters.entryPoint,
                     include: ["../../node_modules/almond/almond"],
                     override: {
                         // We use the wrapping technique here instead of `insertRequire`
@@ -154,7 +113,7 @@ module.exports = function (grunt) {
                         // `insertRequire` is async!
                         wrap: {
                             start: "(function() {",
-                            end: "require('main');\n" + "}());"
+                            end: "require('" + parameters.entryPoint + "');\n" + "}());"
                         }
                     }
                 }]
@@ -165,8 +124,8 @@ module.exports = function (grunt) {
     grunt.config("uglify.build", {
         files: [
             {
-                src: paths.build("requirejs/main.js"),
-                dest: paths.build("uglify/main.min.js")
+                src: paths.build("requirejs", parameters.entryPoint + ".js"),
+                dest: paths.build("uglify", parameters.entryPoint + ".js")
             }
         ]
     });
@@ -183,11 +142,11 @@ module.exports = function (grunt) {
                 expand: true,
                 flatten: true,
                 src: [
-                    paths.build("requirejs/main.js"),
-                    paths.build("uglify/main.min.js"),
-                    paths.build("uglify/main.min.map")
+                    paths.build("requirejs", parameters.entryPoint + ".js"),
+                    paths.build("uglify", parameters.entryPoint + ".min.js"),
+                    paths.build("uglify", parameters.entryPoint + ".min.map")
                 ],
-                dest: paths.distribution("js")
+                dest: paths.distribution(paths.source())
             }
         ]
     });
@@ -256,6 +215,18 @@ module.exports = function (grunt) {
             {
                 expand: true,
                 cwd: ".",
+                src: ["Parameters.json"],
+                dest: paths.www()
+            },
+            {
+                expand: true,
+                cwd: ".",
+                src: [paths.bower()],
+                dest: paths.www()
+            },
+            {
+                expand: true,
+                cwd: ".",
                 src: [paths.bower()],
                 dest: paths.www()
             },
@@ -273,7 +244,7 @@ module.exports = function (grunt) {
             },
             {
                 src: paths.source(),
-                dest: paths.www("js")
+                dest: paths.www(paths.source())
             },
             {
                 expand: true,

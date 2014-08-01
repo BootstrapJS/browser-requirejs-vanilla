@@ -1,0 +1,18 @@
+{
+    "entryPoint": "main",
+    "specificationSuffix": ".spec.js",
+    "requireJsConfigName": "require.config.js",
+    "paths": {
+        "source": "Library",
+        "specs": "Specifications",
+        "fixtures": "Fixtures",
+        "build": "Temporary",
+        "distribution": "Package",
+        "assets": "Assets",
+        "www": "Public",
+        "logs": "Logs",
+        "vendor": "Vendor",
+        "bower": "bower_components",
+        "node": "node_modules"
+    }
+}
