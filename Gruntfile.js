@@ -1,5 +1,6 @@
 /* jshint node:true */
 var support = require("./Build Support/Basic");
+var cleaner = require("./Build Support/AMDClean");
 module.exports = function (grunt) {
     /**
      * Automatically load all Grunttasks, which follow the pattern `grunt-*`
@@ -92,31 +93,18 @@ module.exports = function (grunt) {
      * Statically build all dependencies into one file for production
      */
     grunt.config("requirejs", {
-        all: {
+         all: {
             options: {
                 basePath: paths.source(),
                 mainConfigFile: paths.source(parameters.requireJsConfigName),
                 dir: paths.build("requirejs"),
                 optimize: "none",
                 generateSourceMaps: true,
-                wrap: {
-                    start: "(function() {",
-                    end: "}());"
-                },
                 modules: [{
-                    name: parameters.entryPoint,
-                    include: ["../../node_modules/almond/almond"],
-                    override: {
-                        // We use the wrapping technique here instead of `insertRequire`
-                        // as we need one initial sync `require` to make sure the library
-                        // is fully loaded once the file is completely processed.
-                        // `insertRequire` is async!
-                        wrap: {
-                            start: "(function() {",
-                            end: "require('" + parameters.entryPoint + "');\n" + "}());"
-                        }
-                    }
-                }]
+                    name: parameters.entryPoint
+                }],
+                // Run amdclean on the build result
+                onModuleBundleComplete: cleaner.createOnModuleBundleComplete(parameters, paths)
             }
         }
     });
@@ -124,8 +112,8 @@ module.exports = function (grunt) {
     grunt.config("uglify.build", {
         files: [
             {
-                src: paths.build("requirejs", parameters.entryPoint + ".js"),
-                dest: paths.build("uglify", parameters.entryPoint + ".min.js")
+                src: paths.build("requirejs", parameters.entryPoint + ".cleaned.js"),
+                dest: paths.build("uglify", parameters.entryPoint + ".cleaned.min.js")
             }
         ]
     });
@@ -142,11 +130,14 @@ module.exports = function (grunt) {
                 expand: true,
                 flatten: true,
                 src: [
-                    paths.build("requirejs", parameters.entryPoint + ".js"),
-                    paths.build("uglify", parameters.entryPoint + ".min.js"),
-                    paths.build("uglify", parameters.entryPoint + ".min.map")
+                    paths.build("requirejs", parameters.entryPoint + ".cleaned.js"),
+                    paths.build("uglify", parameters.entryPoint + ".cleaned.min.js"),
+                    paths.build("uglify", parameters.entryPoint + ".cleaned.min.map")
                 ],
-                dest: paths.distribution(paths.source())
+                dest: paths.distribution(paths.source()),
+                rename: function(dest, src) {
+                    return dest + "/" + src.replace(".cleaned.", ".");
+                }
             }
         ]
     });

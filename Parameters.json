@@ -1,5 +1,6 @@
 {
     "entryPoint": "main",
+    "exportEntryPoint": false,
     "specificationSuffix": ".spec.js",
     "requireJsConfigName": "require.config.js",
     "paths": {
