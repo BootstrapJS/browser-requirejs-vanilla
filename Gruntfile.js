@@ -53,7 +53,7 @@ module.exports = function (grunt) {
      */
     grunt.config("uglify", {
         options: {
-            report: "gzip",
+            report: "min",
             /** preserve special comments, which include licenses and stuff */
             preserveComments: "some",
             /** Write out source maps for each uglified target */
@@ -125,7 +125,7 @@ module.exports = function (grunt) {
         files: [
             {
                 src: paths.build("requirejs", parameters.entryPoint + ".js"),
-                dest: paths.build("uglify", parameters.entryPoint + ".js")
+                dest: paths.build("uglify", parameters.entryPoint + ".min.js")
             }
         ]
     });
@@ -260,9 +260,9 @@ module.exports = function (grunt) {
      * Clean all the build and temporary directories
      */
     grunt.config("clean", {
-        "build": [paths.build("**/*")],
-        "distribution": [paths.distribution("**/*")],
-        "www": [paths.www("**/*")]
+        "build": [paths.build()],
+        "distribution": [paths.distribution()],
+        "www": [paths.www()]
     });
 
     /**
