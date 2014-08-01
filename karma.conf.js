@@ -10,18 +10,18 @@ module.exports = function (config) {
         files: [
             // Requirejs configuration and test bootstrapping
             // Define before non included files to prioritize inclusion
-            "src/require.config.js",
-            "specs/environment/require.config.js",
-            "specs/environment/init.js",
+            "Library/require.config.js",
+            "Specifications/Environment/require.config.js",
+            "Specifications/Environment/init.js",
 
             // Html fixtures
-            "fixtures/**/*.html",
+            "Fixtures/**/*.html",
 
             // All application and library source files
-            {pattern: "src/**/*.js", included: false, served: true},
+            {pattern: "Library/**/*.js", included: false, served: true},
             
             // All Test specs
-            {pattern: "specs/**/*.spec.js", included: false, served: true}
+            {pattern: "Specifications/**/*.spec.js", included: false, served: true}
         ],
 
         // list of files to exclude
@@ -29,7 +29,7 @@ module.exports = function (config) {
 
         // Preprocess certain files, like HTML ;)
         preprocessors: {
-            'fixtures/**/*.html': ["html2js"]
+            'Fixtures/**/*.html': ["html2js"]
         },
 
         // use dots reporter, as travis terminal does not support escaping sequences
@@ -39,7 +39,7 @@ module.exports = function (config) {
 
         junitReporter: {
             // will be resolved to basePath (in the same way as files/exclude patterns)
-            outputFile: 'logs/karma/test-results.xml'
+            outputFile: 'Logs/Karma/test-results.xml'
         },
 
         // web server port

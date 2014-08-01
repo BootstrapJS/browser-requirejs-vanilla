@@ -25,32 +25,33 @@ required:
 3. Replace the `name`, `description` and `author` inside the `package.json` with
    information about your new project
 4. Run `npm install`
+5. (Run `bower install`)
 5. Run `grunt symlink:www`
 
 ## Development
 
 The following basic rules apply during development:
 
-- JavaScript sourcecode is stored under `src`
-- All other *web* content (html, css, images, ...) is stored under `assets`
-- `grunt symlink:www` takes care of creating a `www` directory which contains
+- JavaScript sourcecode is stored under `Library`
+- All other *web* content (html, css, images, ...) is stored under `Assets`
+- `grunt symlink:www` takes care of creating a `Public` directory which contains
   all the needed file structures linked for dynamic loading during development
-    - `www/index_dev.html` may be opened to test the app during development. It
+    - `Public/index_dev.html` may be opened to test the app during development. It
       automatically bootstraps the application using the `main.js` module stored
-      under `src`. All dependencies are loaded dynamically
+      under `Library`. All dependencies are loaded dynamically
 - `grunt build` creates a combined and minified build, which is stored under
-  `dist`. 
-    - Opening `index.html` inside the `dist` folder loads the combined
+  `Package`. 
+    - Opening `index.html` inside the `Package` folder loads the combined
       application
-- `src/require.config.js` handles all the *require.js* configuration for
+- `Library/require.config.js` handles all the *require.js* configuration for
   development and production builds
-- Tests are stored under `specs`
+- Tests are stored under `Specifications`
     - They are named `*.spec.js`
     - The used framework is Jasmine
     - Tests are supposed to be require-modules as well
-- Test fixtures are stored under `fixtures`
+- Test fixtures are stored under `Fixtures`
     - They are automatically loaded and made available under
-      `window.__html__["fixtures/YOUR_FIXTURE_NAME.html"]`
+      `window.__html__["Fixtures/YOUR_FIXTURE_NAME.html"]`
 
 Run `grunt tasks` to show a list of all available *grunt* tasks
 
@@ -61,4 +62,4 @@ versions of the seed for different frameworks, libraries and/or use cases.
 
 ## Further Read
 
-I wrote a more detailed blog post about this repository, which can be found on my [personal blog](http://www.westhoffswelt.de/blog/2014/2/21/how-i-seed-a-new-javascript-project).
+I wrote a more detailed blog post about this repository, which can be found on my [personal blog](http://www.westhoffswelt.de/blog/2014/2/21/how-i-seed-a-new-javascript-project). It may be outdated however, with regards to the current state of the seed repository.

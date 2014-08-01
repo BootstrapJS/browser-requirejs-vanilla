@@ -1,9 +1,67 @@
-/* globals module */
+/* globals module, __dirname */
+var fs = require("fs");
+
 module.exports = function (grunt) {
     /**
      * Automatically load all Grunttasks, which follow the pattern `grunt-*`
      */
     require('load-grunt-tasks')(grunt);
+
+    /**
+     * Configure the projects paths
+     */
+    var paths = {
+        source: "Library",
+        specs: "Specifications",
+        build: "Temporary",
+        distribution: "Package",
+        assets: "Assets",
+        www: "Public",
+        vendor: "Vendor",
+        bower: "bower_components",
+        node: "node_modules"
+    };
+
+    // Create convenience append functions for each path ;)
+    (function() {
+        var key, path;
+        /*jshint -W083, -W089*/
+        for (key in paths) {
+            if (paths.hasOwnProperty(key)) {
+                path = paths[key];
+                paths[key] = (function(path) {
+                    return function(/* segment... */) {
+                        var args = Array.prototype.slice.apply(arguments);
+                        if (args.length === 0) {
+                            return path;
+                        }
+
+                        var suffix = "";
+                        args.forEach(function(segment) {
+                            if (segment.substr(0, 1) === "/") {
+                                segment = segment.substring(1);
+                            }
+
+                            suffix = suffix + "/" + segment;
+                        });
+
+                        return path + "/" + suffix;
+                    };
+                }(path));
+            }
+        }
+        /*jshint +W083, +W089*/
+    }());
+
+    /**
+     * Allow access to package.json if present
+     */
+    var pkg = {};
+    if (fs.existsSync(__dirname + "/package.json")) {
+        pkg = JSON.parse(
+            fs.readFileSync(__dirname + "/package.json", {encoding: "utf8"})
+        );
+    }
 
     /**
      * Allow description and definition of avaialable tasks
@@ -53,13 +111,13 @@ module.exports = function (grunt) {
      */
     grunt.config("jshint", {
         options: {
-            jshintrc: "jshint.json"
+            jshintrc: pkg.jshintConfig || "jshint.json"
         },
         all: [
             "Gruntfile.js",
             "karma.conf.js",
-            "specs/**/*.js",
-            "src/**/*.js"
+            paths.specs("**/*.spec.js"),
+            paths.source("**/*.js")
         ]
     });
 
@@ -77,9 +135,9 @@ module.exports = function (grunt) {
     grunt.config("requirejs", {
         all: {
             options: {
-                basePath: "src/",
-                mainConfigFile: "src/require.config.js",
-                dir: "build/requirejs/",
+                basePath: paths.source(),
+                mainConfigFile: paths.source("require.config.js"),
+                dir: paths.build("requirejs"),
                 optimize: "none",
                 generateSourceMaps: true,
                 wrap: {
@@ -105,35 +163,38 @@ module.exports = function (grunt) {
     });
 
     grunt.config("uglify.build", {
-        files: {
-            "build/uglify/main.min.js": "build/requirejs/main.js"
-        }
+        files: [
+            {
+                src: paths.build("requirejs/main.js"),
+                dest: paths.build("uglify/main.min.js")
+            }
+        ]
     });
 
     grunt.config("copy.dist", {
         files: [
             {
                 expand: true,
-                cwd: "assets",
+                cwd: paths.assets(),
                 src: ["*"],
-                dest: "dist/"
+                dest: paths.distribution()
             },
             {
                 expand: true,
                 flatten: true,
                 src: [
-                    "build/requirejs/main.js",
-                    "build/uglify/main.min.js",
-                    "build/uglify/main.min.map"
+                    paths.build("requirejs/main.js"),
+                    paths.build("uglify/main.min.js"),
+                    paths.build("uglify/main.min.map")
                 ],
-                dest: "dist/js/"
+                dest: paths.distribution("js")
             }
         ]
     });
 
     grunt.config("watch.build", {
         files: [
-            "src/**/*.js"
+            paths.source("**/*.js")
         ],
         tasks: ["build"]
     });
@@ -195,30 +256,30 @@ module.exports = function (grunt) {
             {
                 expand: true,
                 cwd: ".",
-                src: ["bower_components"],
-                dest: "www/"
+                src: [paths.bower()],
+                dest: paths.www()
             },
             {
                 expand: true,
                 cwd: ".",
-                src: ["node_modules"],
-                dest: "www/"
+                src: [paths.node()],
+                dest: paths.www()
             },
             {
                 expand: true,
                 cwd: ".",
-                src: ["vendor"],
-                dest: "www/"
+                src: [paths.vendor()],
+                dest: paths.www()
             },
             {
-                src: "src",
-                dest: "www/js"
+                src: paths.source(),
+                dest: paths.www("js")
             },
             {
                 expand: true,
-                cwd: "assets",
+                cwd: paths.assets(),
                 src: ["*"],
-                dest: "www/"
+                dest: paths.www()
             }
         ]
     });
@@ -228,9 +289,9 @@ module.exports = function (grunt) {
      * Clean all the build and temporary directories
      */
     grunt.config("clean", {
-        "build": ["build/**/*"],
-        "dist": ["dist/**/*"],
-        "www": ["www/**/*"]
+        "build": [paths.build("**/*")],
+        "distribution": [paths.distribution("**/*")],
+        "www": [paths.www("**/*")]
     });
 
     /**
