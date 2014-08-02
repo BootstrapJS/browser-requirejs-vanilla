@@ -10,7 +10,7 @@ The current seed utilizes the following features/projects:
 
 - [Grunt](http://gruntjs.com)
 - [require.js](http://requirejs.org/)
-- [almond](https://github.com/jrburke/almond)
+- [amdclean](http://gregfranko.com/amdclean/)
 - [karma-runner](http://karma-runner.github.io/)
 - [jshint](http://www.jshint.com/)
 - [npm](http://npmjs.org)
@@ -39,6 +39,8 @@ The following basic rules apply during development:
     - `Public/index_dev.html` may be opened to test the app during development. It
       automatically bootstraps the application using the `main.js` module stored
       under `Library`. All dependencies are loaded dynamically
+    - Use `grunt server` to startup a correctly configured webserver to load the development
+      files
 - `grunt build` creates a combined and minified build, which is stored under
   `Package`. 
     - Opening `index.html` inside the `Package` folder loads the combined
@@ -52,8 +54,8 @@ The following basic rules apply during development:
 - Test fixtures are stored under `Fixtures`
     - They are automatically loaded and made available under
       `window.__html__["Fixtures/YOUR_FIXTURE_NAME.html"]`
-
-Run `grunt tasks` to show a list of all available *grunt* tasks
+- All Grunt related configuration can be found split up in separate files under
+  the `Build Support` directory.
 
 ## Branches
 

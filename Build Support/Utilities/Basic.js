@@ -13,7 +13,7 @@ var fs = require("fs");
  * @return {*}
  */
 exports.loadJSONFile = function(filename, alternative) {
-    var fullPath = __dirname + "/../" + filename;
+    var fullPath = __dirname + "/../../" + filename;
     if (fs.existsSync(fullPath)) {
         return JSON.parse(
             fs.readFileSync(fullPath, {encoding: "utf8"})

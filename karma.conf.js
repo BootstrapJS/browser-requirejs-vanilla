@@ -1,5 +1,5 @@
 /* jshint node:true */
-var support = require("./Build Support/Basic");
+var support = require("./Build Support/Utilities/Basic");
 
 /**
  * Load main build parameters and paths
