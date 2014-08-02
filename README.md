@@ -1,4 +1,4 @@
-# Jakobs JavaScript Project Seed
+# Vanilla Browser JavaScript Project Seed
 
 This repository contains a basic project setup, which I use to quickly setup
 new prototype projects for myself. Maybe this templates do help others as
@@ -56,11 +56,6 @@ The following basic rules apply during development:
       `window.__html__["Fixtures/YOUR_FIXTURE_NAME.html"]`
 - All Grunt related configuration can be found split up in separate files under
   the `Build Support` directory.
-
-## Branches
-
-Different branches of the repository exist, which contain certain specialized
-versions of the seed for different frameworks, libraries and/or use cases.
 
 ## Further Read
 
