@@ -9,7 +9,8 @@ exports.createOnModuleBundleComplete = function (parameters, paths) {
         var globalModules = (parameters.exportEntryPoint === true) ? [parameters.entryPoint] : [];
         fs.writeFileSync(cleanedModulePath, amdclean.clean({
             filePath: modulePath,
-            globalModules: globalModules
+            globalModules: globalModules,
+            transformAMDChecks: true
         }));
     };
 };
