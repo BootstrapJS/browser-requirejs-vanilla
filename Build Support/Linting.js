@@ -11,10 +11,13 @@ module.exports = function(grunt, options) {
         {}
     );
 
-    grunt.registerTask("lint", ["jshint", "lesslint"]);
+    grunt.registerTask("lint", ["concurrent:lint"]);
 
     return {
         tasks: {
+            "concurrent": {
+                "lint": ["jshint", "lesslint"]
+            },
             /**
              * Jshint configuration for linting the project files
              */
@@ -23,7 +26,7 @@ module.exports = function(grunt, options) {
                     jshintrc: pkg.jshintConfig || "jshint.json"
                 },
                 all: [
-                    "Gruntfile.js",
+                   "Gruntfile.js",
                     "karma.conf.js",
                     "Build Support/**/*.js",
                     paths.specs("**/*" + parameters.specificationSuffix),
