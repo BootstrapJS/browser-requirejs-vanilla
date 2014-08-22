@@ -44,7 +44,7 @@ module.exports = function(grunt, options) {
                     },
                     csslint: csslintOptions
                 },
-                src: [paths.styles("*/*.less")]
+                all: [paths.styles("**/*.less")]
             }
         }
     };

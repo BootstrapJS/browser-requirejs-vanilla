@@ -1,0 +1,11 @@
+{
+    "qualified-headings": false,
+    "fallback-colors": false,
+    "important": false,
+    "selector-max-approaching": false,
+    "selector-max": false,
+    "font-sizes": false,
+    "floats": false,
+    "unique-headings": false,
+    "adjoining-classes": false
+}

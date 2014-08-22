@@ -37,5 +37,6 @@
     "load-grunt-tasks": "~0.6.0",
     "requirejs": "~2.1.14"
   },
-  "jshintConfig": "jshint.json"
+  "jshintConfig": "jshint.json",
+  "csslintConfig": "csslint.json"
 }
