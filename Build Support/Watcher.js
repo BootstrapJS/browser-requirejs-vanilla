@@ -11,13 +11,21 @@ module.exports = function(grunt, options) {
                 },
 
                 "lint": {
-                    files: grunt.config.get("jshint.all"),
+                    files: [
+                        "Gruntfile.js",
+                        "karma.conf.js",
+                        "Build Support/**/*.js",
+                        paths.specs("**/*" + parameters.specificationSuffix),
+                        paths.source("**/*.js"),
+                        paths.styles("**/*.less")
+                    ],
                     tasks: ["lint"]
                 },
 
                 "build": {
                     files: [
-                        paths.source("**/*.js")
+                        paths.source("**/*.js"),
+                        paths.styles("**/*.less")
                     ],
                     tasks: ["build"]
                 }

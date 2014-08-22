@@ -1,10 +1,17 @@
 /* jshint node:true */
+var loadJSONFile = require("./Utilities/Basic.js").loadJSONFile;
+
 module.exports = function(grunt, options) {
     var parameters = options.parameters;
     var paths = options.paths;
     var pkg = options.pkg;
 
-    grunt.registerTask("lint", ["jshint"]);
+    var csslintOptions = loadJSONFile(
+        pkg.csslintConfig || "csslint.json",
+        {}
+    );
+
+    grunt.registerTask("lint", ["jshint", "lesslint"]);
 
     return {
         tasks: {
@@ -22,6 +29,19 @@ module.exports = function(grunt, options) {
                     paths.specs("**/*" + parameters.specificationSuffix),
                     paths.source("**/*.js")
                 ]
+            },
+
+            /**
+             * LessLint configuration for linting Less files
+             */
+            "lesslint": {
+                options: {
+                    less: {
+                        paths: [paths.styles()]
+                    },
+                    csslint: csslintOptions
+                },
+                src: [paths.styles("*/*.less")]
             }
         }
     };
