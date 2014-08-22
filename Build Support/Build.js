@@ -38,6 +38,15 @@ module.exports = function (grunt, options) {
                             rename: function (dest, src) {
                                 return dest + "/" + src.replace(".cleaned.", ".");
                             }
+                        },
+                        {
+                            expand: true,
+                            flatten: true,
+                            src: [
+                                paths.build("cssmin", "*.min.css"),
+                                paths.build("autoprefixer", "*.css")
+                            ],
+                            dest: paths.distribution(paths.styles())
                         }
                     ]
                 }
