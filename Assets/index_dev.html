@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Jakobs Browser JavaScript Development Seed</title>
-        <link href="css/style.css" rel="stylesheet" type="text/css" media="all">
+        <link rel="stylesheet/less-lazy" type="text/css" href="Styles/MyStyles.less">
     </head>
     <body>
         <script type="text/javascript">
@@ -17,6 +17,32 @@
                 window.__parameters = JSON.parse(request.responseText);
             }
         </script>
+
+        <!-- Load and compile Styles -->
+        <script type="text/javascript">
+            var less = {
+                env: "development",
+                async: true,
+                fileAsync: false,
+                errorReporting: "console",
+                logLevel: 2,
+                dumpLineNumbers: "comments",
+                relativeUrls: false
+            };
+        </script>
+        <script type="text/javascript" src="node_modules/grunt-contrib-less/node_modules/less/dist/less-1.7.3.js"></script>
+        <script type="text/javascript">
+            var links = document.getElementsByTagName('link');
+            for (var i = 0; i < links.length; i++) {
+                if (links[i].rel === 'stylesheet/less-lazy') {
+                    less.sheets.push(links[i]);
+                }
+            }
+            var modifyVars = __parameters.less || (__parameters.less.modifyVars || {} );
+            less.refresh(true, modifyVars);
+        </script>
+
+        <!-- Load JavaScript stuff -->
         <script type="text/javascript" src="node_modules/requirejs/require.js"></script>
         <script type="text/javascript" src="Library/require.config.js"></script>
         <script type="text/javascript">

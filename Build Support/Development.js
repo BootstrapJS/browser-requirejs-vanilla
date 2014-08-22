@@ -35,12 +35,6 @@ module.exports = function(grunt, options) {
                         {
                             expand: true,
                             cwd: ".",
-                            src: [paths.bower()],
-                            dest: paths.www()
-                        },
-                        {
-                            expand: true,
-                            cwd: ".",
                             src: [paths.node()],
                             dest: paths.www()
                         },
@@ -53,6 +47,10 @@ module.exports = function(grunt, options) {
                         {
                             src: paths.source(),
                             dest: paths.www(paths.source())
+                        },
+                        {
+                            src: paths.styles(),
+                            dest: paths.www(paths.styles())
                         },
                         {
                             expand: true,
@@ -71,7 +69,7 @@ module.exports = function(grunt, options) {
                 all: {
                     options: {
                         port: parameters.devServer.port,
-                        base: __dirname + "/" + parameters.devServer.documentRoot
+                        base: __dirname + "/../" + parameters.devServer.documentRoot
                     }
                 }
             }
