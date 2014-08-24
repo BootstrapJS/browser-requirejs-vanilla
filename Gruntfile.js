@@ -7,6 +7,11 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     /**
+     * Time grunt execution
+     */
+    require("time-grunt")(grunt);
+
+    /**
      * Load main build parameters
      */
     var parameters = support.loadJSONFile("Parameters.json", {});
