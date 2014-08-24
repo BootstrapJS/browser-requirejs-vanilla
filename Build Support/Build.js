@@ -3,17 +3,10 @@ module.exports = function (grunt, options) {
     var parameters = options.parameters;
     var paths = options.paths;
 
-    grunt.registerTask("build", ["concurrent:build", "copy:dist"]);
+    grunt.registerTask("build", ["javascript", "styles", "copy:dist"]);
 
     return {
         tasks: {
-            /**
-             * Concurrency of the build module
-             */
-            "concurrent": {
-                "build": ["javascript", "styles"]
-            },
-
             /**
              * Copy all the needed files to the distribution directory
              */

@@ -36,9 +36,7 @@ module.exports = function (grunt) {
     );
 
     /**
-     * Default grunt task with concurrency ;)
+     * Default grunt task
      */
-    grunt.config("concurrent.default", ["lint", "test", "build"]);
-    grunt.registerTask("default", ["concurrent:default"]);
-//    grunt.registerTask("default", ["concurrent:default", "clean:build"]);
+    grunt.registerTask("default", ["lint", "test", "build", "clean:build"]);
 };

@@ -11,13 +11,10 @@ module.exports = function(grunt, options) {
         {}
     );
 
-    grunt.registerTask("lint", ["concurrent:lint"]);
+    grunt.registerTask("lint", ["jshint", "lesslint"]);
 
     return {
         tasks: {
-            "concurrent": {
-                "lint": ["jshint", "lesslint"]
-            },
             /**
              * Jshint configuration for linting the project files
              */
